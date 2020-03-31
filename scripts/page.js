@@ -15,7 +15,7 @@
     if(buildAbbr in namesToLatLon) {
       let marker = L.marker(namesToLatLon[buildAbbr]).addTo(map);
     }
-    else {
+    else {wd
       console.log("ERROR: Tried to use unidentified building.")
     }
   }

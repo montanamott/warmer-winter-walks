@@ -1,0 +1,14 @@
+
+#right-panel {
+    position: absolute;
+    height: 100%;
+    top: 10px;
+    /* 2% padding on left and right */
+    left: 72%;
+    width: 26%;
+}
+
+#logo-div {
+    width: 100%;
+    text-align: center;
+}
