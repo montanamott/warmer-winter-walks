@@ -1,29 +1,31 @@
-import React, {useState} from 'react';
-import { Button, Tabs, Tab, GridList, GridListTile } from '@material-ui/core';
-// import './ResultsPanel.css';
+import React from 'react';
+import Result from './Result';
+import './ResultsPanel.css';
+import { Button, Tabs, Tab, List, ListItem } from '@material-ui/core';
+
+import { ListItemText, ListItemIcon } from '@material-ui/core';
+import PlaceIcon from '@material-ui/icons/Place';
 
 function TabPanel(props) {
-    let tileData = ["a", "b"];
 
     return(
-        <div hidden={props.value !== props.index}>
-            <GridList cellHeight={50} cols={1}>
-            {tileData.map((tile) => (
-                <GridListTile key={tile} cols={1}>
-                    <p>{tile}</p>
-                </GridListTile>
+        <div className="tabpanel-div" hidden={props.displayWhenWarm !== props.value}>
+            <List>
+            {props.route.map((location, index) => (
+                <Result
+                    location={location}
+                    needMarker={(index === 0 || index === props.route.length - 1)}>    
+                </Result>
             ))}
-            </GridList>
+            </List>
         </div>
     );
 }
 
 function ResultsPanel(props) {
-
-    let [tabValue, setTabValue] = useState(0);
     
     function tabChange(event, index) {
-        setTabValue(index);
+        props.setDisplayingWarm(index === 0 ? true : false);
     }
 
     function back() {
@@ -34,12 +36,13 @@ function ResultsPanel(props) {
         <div>
             <Button variant="outlined" onClick={back}>Back to Search</Button>
             <br/><br/>
-            <Tabs value={tabValue} onChange={tabChange} aria-label="simple tabs example">
+
+            <Tabs onChange={tabChange} value={(props.displayingWarm) ? 0 : 1} aria-label="simple tabs example">
                 <Tab label="Warmer" />
                 <Tab label="Faster" />
             </Tabs>
-            <TabPanel value={tabValue} index={0}/>
-            <TabPanel value={tabValue} index={1}/>
+            <TabPanel route={props.warmRoute} value={props.displayingWarm} displayWhenWarm={true}/>
+            <TabPanel route={props.fastRoute} value={props.displayingWarm} displayWhenWarm={false}/>
         </div>
     );
 }

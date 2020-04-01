@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './RightPanel.css';
 import ResultsPanel from './ResultsPanel';
 import SearchPanel from './SearchPanel';
 
-function RightPanel() {
+function RightPanel(props) {
 
-    let [isSearching, setSearching] = useState(true);
     let innerPanel;
 
-    if (isSearching) {
-        innerPanel = <SearchPanel setSearching={setSearching}></SearchPanel>;
+    if (props.isSearching) {
+        innerPanel = <SearchPanel
+                        setSearching={props.setSearching}
+                        calculateNewRoute={props.calculateNewRoute}>
+                    </SearchPanel>;
     }
     else {
-        innerPanel = <ResultsPanel setSearching={setSearching}></ResultsPanel>;
+        innerPanel = <ResultsPanel
+                        setSearching={props.setSearching}
+                        warmRoute={props.warmRoute}
+                        fastRoute={props.fastRoute}
+                        displayingWarm={props.displayingWarm}
+                        setDisplayingWarm={props.setDisplayingWarm}>
+                    </ResultsPanel>;
     }
     return (
         <div id="right-panel">
@@ -21,11 +29,7 @@ function RightPanel() {
             </div>
             {innerPanel}
         </div>
-    )
-
-    function switchPanel() {
-        setSearching(!isSearching);
-    }
+    );
 }
 
 export default RightPanel;
