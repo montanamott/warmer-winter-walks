@@ -1,9 +1,8 @@
 import React from 'react';
-//import markerIcon from './img/marker-icon.png';
 import './Result.css';
-import * as constants from "./Constants.js";
 import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import PlaceIcon from '@material-ui/icons/Place';
+import * as constants from "./Constants.js";
 
 function Result(props) {
     let isIntermediateStop = (props.location in constants.stops);
@@ -13,13 +12,13 @@ function Result(props) {
     let locationName = isIntermediateStop ?
         constants.stops[props.location].name : constants.locations[props.location].name;
     
-    let markerImgIfNeeded = (props.needMarker) ?
+    let markerImgIfNeeded = (props.atEnd || isIntermediateStop) ?
         <ListItemIcon> <PlaceIcon /> </ListItemIcon> : "";
 
     return (
         <ListItem button>
             {markerImgIfNeeded}
-            <ListItemText inset={!props.needMarker} primary={locationName} secondary={intermediateStopText} />
+            <ListItemText inset={!(props.atEnd || isIntermediateStop)} primary={locationName} secondary={intermediateStopText} />
         </ListItem>
     );
 }

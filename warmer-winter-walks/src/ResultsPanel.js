@@ -1,10 +1,7 @@
 import React from 'react';
 import Result from './Result';
 import './ResultsPanel.css';
-import { Button, Tabs, Tab, List, ListItem } from '@material-ui/core';
-
-import { ListItemText, ListItemIcon } from '@material-ui/core';
-import PlaceIcon from '@material-ui/icons/Place';
+import { Button, Tabs, Tab, List } from '@material-ui/core';
 
 function TabPanel(props) {
 
@@ -14,7 +11,7 @@ function TabPanel(props) {
             {props.route.map((location, index) => (
                 <Result
                     location={location}
-                    needMarker={(index === 0 || index === props.route.length - 1)}>    
+                    atEnd={(index === 0 || index === props.route.length - 1)}>    
                 </Result>
             ))}
             </List>
