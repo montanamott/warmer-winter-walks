@@ -9,6 +9,8 @@ function App() {
   let [fastRoute, setFastRoute] = useState([]);
   let [isSearching, setSearching] = useState(true);
   let [displayingWarm, setDisplayingWarm] = useState(true);
+  let [resultMouseEnter, setResultMouseEnter] = useState("");
+  let [resultMouseLeave, setResultMouseLeave] = useState("");
 
   function calculateNewRoute(start, destination, stop) {
     let tempWarmRoute = ["PIER", "CHRYS", "DC", "MUJO", "EECS", "GGBL", "DOW", "BEYST"];
@@ -25,7 +27,11 @@ function App() {
         warmRoute={warmRoute}
         fastRoute={fastRoute}
         isSearching={isSearching}
-        displayingWarm={displayingWarm}>    
+        displayingWarm={displayingWarm}
+        resultMouseEnter={resultMouseEnter}
+        setResultMouseEnter={setResultMouseEnter}
+        resultMouseLeave={resultMouseLeave}
+        setResultMouseLeave={setResultMouseLeave}>   
       </MapWrapper>
       <RightPanel
         warmRoute={warmRoute}
@@ -34,7 +40,9 @@ function App() {
         isSearching={isSearching}
         setSearching={setSearching}
         displayingWarm={displayingWarm}
-        setDisplayingWarm={setDisplayingWarm}>
+        setDisplayingWarm={setDisplayingWarm}
+        setResultMouseEnter={setResultMouseEnter}
+        setResultMouseLeave={setResultMouseLeave}>
       </RightPanel>
     </div>
   );

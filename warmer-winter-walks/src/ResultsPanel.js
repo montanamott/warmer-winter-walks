@@ -11,8 +11,10 @@ function TabPanel(props) {
             {props.route.map((location, index) => (
                 <Result
                     location={location}
-                    atEnd={(index === 0 || index === props.route.length - 1)}>    
-                </Result>
+                    atEnd={(index === 0 || index === props.route.length - 1)}
+                    setResultMouseEnter={props.setResultMouseEnter}
+                    setResultMouseLeave={props.setResultMouseLeave}
+                />
             ))}
             </List>
         </div>
@@ -38,8 +40,20 @@ function ResultsPanel(props) {
                 <Tab label="Warmer" />
                 <Tab label="Faster" />
             </Tabs>
-            <TabPanel route={props.warmRoute} value={props.displayingWarm} displayWhenWarm={true}/>
-            <TabPanel route={props.fastRoute} value={props.displayingWarm} displayWhenWarm={false}/>
+            <TabPanel
+                route={props.warmRoute}
+                value={props.displayingWarm}
+                setResultMouseEnter={props.setResultMouseEnter}
+                setResultMouseLeave={props.setResultMouseLeave}
+                displayWhenWarm={true}
+            />
+            <TabPanel
+                route={props.fastRoute}
+                value={props.displayingWarm}
+                setResultMouseEnter={props.setResultMouseEnter}
+                setResultMouseLeave={props.setResultMouseLeave}
+                displayWhenWarm={false}
+            />
         </div>
     );
 }

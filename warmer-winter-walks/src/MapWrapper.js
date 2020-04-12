@@ -31,6 +31,16 @@ L.Icon.Default.mergeOptions({
 // path prop is a list of keys representing the path to be rendered
 function MapWrapper(props) {
 
+  // Mouse-event-driven marker popup
+  let leafletElementMap = {};
+  function refFxnFactory(locationCode) {
+    return (ref) => {
+      if (ref) {
+        leafletElementMap[locationCode] = ref.leafletElement;
+      }
+    }
+  }
+
   let markerList = []; 
   let circleList = []; 
   let currentRoute = null;
@@ -40,19 +50,32 @@ function MapWrapper(props) {
 
   if(!props.isSearching) {  
       markerList = currentRoute.filter((val, index) => index === 0 || index === currentRoute.length - 1).map((val, index) => 
-        <Marker position={constants.locations[val].latlon} /*icon={(index === 0) ? getMarkerIcon("green") : getMarkerIcon("blue")}*/>
+        <Marker ref={refFxnFactory(val)} position={constants.locations[val].latlon} /*icon={(index === 0) ? getMarkerIcon("green") : getMarkerIcon("blue")}*/>
           <Popup> {constants.locations[val].name} </Popup>
         </Marker> );
 
       circleList = currentRoute.filter((val, index) => index !== 0 && index !== currentRoute.length - 1 && !(val in constants.stops)).map((val, index) => 
-                  <Circle center={constants.locations[val].latlon} color={'red'} radius={4} />);
+                  <Circle ref={refFxnFactory(val)} center={constants.locations[val].latlon} color={'red'} radius={4}>
+                    <Popup> {constants.locations[val].name} </Popup>
+                  </Circle>);
 
       routeLine = <Polyline positions={currentRoute.filter(val => !(val in constants.stops)).map(val => constants.locations[val].latlon)} color={'red'}/>;
 
       markerList.push(currentRoute.filter(val => val in constants.stops).map(val=> 
-        <Marker position={constants.locations[constants.stops[val].location].latlon} /*icon={(index === 0) ? getMarkerIcon("green") : getMarkerIcon("blue")}*/>
+        <Marker ref={refFxnFactory(val)} position={constants.locations[constants.stops[val].location].latlon} /*icon={(index === 0) ? getMarkerIcon("green") : getMarkerIcon("blue")}*/>
           <Popup> {constants.stops[val].name} </Popup>
         </Marker> ));
+
+
+      /***** UPDATE MOUSE-EVENT-DRIVEN MARKER POPUPS *****/
+      if (props.resultMouseEnter !== "") {
+        setTimeout(function(){leafletElementMap[props.resultMouseEnter].openPopup()}, 10);
+        props.setResultMouseEnter("");
+      }
+      if (props.resultMouseLeave !== "") {
+        setTimeout(function(){leafletElementMap[props.resultMouseLeave].closePopup()}, 10);
+        props.setResultMouseLeave("");
+      }
   }
   else {   // Show all location markers
     markerList = Object.entries(constants.locations).map(([code, info]) =>

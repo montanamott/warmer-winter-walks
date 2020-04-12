@@ -19,7 +19,9 @@ function RightPanel(props) {
                         warmRoute={props.warmRoute}
                         fastRoute={props.fastRoute}
                         displayingWarm={props.displayingWarm}
-                        setDisplayingWarm={props.setDisplayingWarm}>
+                        setDisplayingWarm={props.setDisplayingWarm}
+                        setResultMouseEnter={props.setResultMouseEnter}
+                        setResultMouseLeave={props.setResultMouseLeave}>
                     </ResultsPanel>;
     }
     return (
