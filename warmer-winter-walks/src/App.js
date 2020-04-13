@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MapWrapper from './MapWrapper';
 import RightPanel from './RightPanel';
+import * as constants from './Constants';
 import './App.css';
 
 function App() {
@@ -12,12 +13,71 @@ function App() {
   let [resultMouseEnter, setResultMouseEnter] = useState("");
   let [resultMouseLeave, setResultMouseLeave] = useState("");
 
-  function calculateNewRoute(start, destination, stop) {
-    let tempWarmRoute = ["PIER", "CHRYS", "DC", "MUJO", "EECS", "GGBL", "DOW", "BEYST"];
-    let tempFastRoute = ["PIER", "DC", "MUJO", "BEYST"];
+  function getPathSection(start, destination) {
+    let route = [];
+    let startIndex = -1; 
+    let destIndex = -1; 
 
-    setWarmRoute(tempWarmRoute);
-    setFastRoute(tempFastRoute);
+    constants.warmMacroRoute.forEach( (element, index) => {
+      if (element === start) {
+        startIndex = index;
+      }
+      if (element === destination) {
+        destIndex = index;
+      }
+    });
+    
+    if(destIndex < startIndex) {
+      route = constants.warmMacroRoute.slice(destIndex, startIndex + 1).reverse();
+    } else {
+      route = constants.warmMacroRoute.slice(startIndex, destIndex + 1);
+    }
+
+    return route;
+  }
+
+  function calculateNewRoute(start, destination, stop) {
+    //let tempWarmRoute = ["BUS-BO", "PIER", "CHRYS", "DC", "MUJO", "EECS", "GGBL", "DOW", "BEYST"];
+    //let tempFastRoute = ["PIER", "DC", "MUJO", "BEYST"];
+    let calculatedFastRoute;
+    let calculatedWarmRoute;
+    let startBuilding;
+    let destBuilding;
+
+    // set startBuilding and destBuilding to be bus stop's building
+    if (constants.locations[start].isBusStop) {
+      startBuilding = constants.locations[start].building;
+    }
+    else startBuilding = start;
+    if (constants.locations[destination].isBusStop) {
+      destBuilding = constants.locations[destination].building;
+    }
+    else destBuilding = destination;
+
+    if (!!stop && stop !== "None") {   // intermediate stop
+      calculatedFastRoute = [startBuilding, constants.stops[stop].location, stop, destBuilding];
+      calculatedWarmRoute = getPathSection(startBuilding, constants.stops[stop].location);
+      calculatedWarmRoute.push(stop);
+      calculatedWarmRoute = calculatedWarmRoute.concat(getPathSection(constants.stops[stop].location, destBuilding).slice(1));
+    }
+    else {
+      calculatedFastRoute = [startBuilding, destBuilding];
+      calculatedWarmRoute = getPathSection(startBuilding, destBuilding);
+    }
+    
+    if (startBuilding !== start) {
+      calculatedWarmRoute.unshift(start);
+      calculatedFastRoute.unshift(start);
+    }
+    if (destBuilding !== destination) {
+      calculatedWarmRoute.push(destination);
+      calculatedFastRoute.push(destination);
+    }
+
+
+
+    setWarmRoute(calculatedWarmRoute);
+    setFastRoute(calculatedFastRoute);
   }
 
   return (

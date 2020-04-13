@@ -28,8 +28,8 @@ function SearchPanel(props) {
                 <label>
                     Select a stop on the way (optional):
                     <br/>
-                    <Select onChange={(event) => (event.target.value === "DEFAULT") ?  setStop(event.target.value) : ""} defaultValue={"DEFAULT"}>
-                        <MenuItem value="DEFAULT"> None </MenuItem>
+                    <Select onChange={(event) => setStop(event.target.value)} defaultValue={"None"}>
+                        <MenuItem value="None"> None </MenuItem>
                         {Object.entries(constants.stops).map(([code, info]) => <MenuItem value={code}> {info.name} </MenuItem> )}
                     </Select>
                 </label>

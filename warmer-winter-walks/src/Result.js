@@ -27,12 +27,22 @@ function Result(props) {
         props.setResultMouseLeave(props.location);
         setResultSelected(false);
     }
+    
+    let busInfo;
+
+    if (!isIntermediateStop && constants.locations[props.location].isBusStop) {
+        busInfo = <div> Some Time </div>
+    }
+    else {
+        busInfo = "";
+    }
 
 
     return (
         <ListItem selected={resultSelected} onMouseEnter={resultEnterHandler} onMouseLeave={resultLeaveHandler}>
             {markerImgIfNeeded}
             <ListItemText inset={!(props.atEnd || isIntermediateStop)} primary={locationName} secondary={intermediateStopText} />
+            {busInfo}
         </ListItem>
     );
 }
