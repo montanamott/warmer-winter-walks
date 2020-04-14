@@ -8,13 +8,13 @@ function RightPanel(props) {
     let innerPanel;
 
     if (props.isSearching) {
-        innerPanel = <SearchPanel
+        innerPanel = <SearchPanel className="panel"
                         setSearching={props.setSearching}
                         calculateNewRoute={props.calculateNewRoute}>
                     </SearchPanel>;
     }
     else {
-        innerPanel = <ResultsPanel
+        innerPanel = <ResultsPanel className="panel"
                         setSearching={props.setSearching}
                         warmRoute={props.warmRoute}
                         fastRoute={props.fastRoute}

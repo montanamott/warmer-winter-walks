@@ -1,4 +1,24 @@
 
+#results-panel-div {
+    position: absolute;
+    height: 90%;
+    width: 100%;
+    display: flexbox;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
 .tabpanel-div {
-    height: 10%;
+    height: 77%;
+    width: 100%;
+}
+
+#back-button {
+    display: flexbox;
+}
+
+#div-around-tabpanel {
+    height: 100%;
+    width: 100%;
+    display: flexbox;
 }

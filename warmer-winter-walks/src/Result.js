@@ -17,7 +17,7 @@ function Result(props) {
     
     let markerImgIfNeeded = (props.atEnd || isIntermediateStop) ?
         <ListItemIcon> <PlaceIcon /> </ListItemIcon> : "";
-
+    
 
     function resultEnterHandler() {
         props.setResultMouseEnter(props.location);

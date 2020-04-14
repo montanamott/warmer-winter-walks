@@ -14,6 +14,8 @@ function App() {
   let [resultMouseLeave, setResultMouseLeave] = useState("");
 
   function getPathSection(start, destination) {
+    //if (start === destination) return [start];
+
     let route = [];
     let startIndex = -1; 
     let destIndex = -1; 
@@ -58,7 +60,8 @@ function App() {
       calculatedFastRoute = [startBuilding, constants.stops[stop].location, stop, destBuilding];
       calculatedWarmRoute = getPathSection(startBuilding, constants.stops[stop].location);
       calculatedWarmRoute.push(stop);
-      calculatedWarmRoute = calculatedWarmRoute.concat(getPathSection(constants.stops[stop].location, destBuilding).slice(1));
+      //calculatedWarmRoute = calculatedWarmRoute.concat(getPathSection(constants.stops[stop].location, destBuilding).slice(1));
+      calculatedWarmRoute = calculatedWarmRoute.concat(getPathSection(constants.stops[stop].location, destBuilding));
     }
     else {
       calculatedFastRoute = [startBuilding, destBuilding];
