@@ -47,6 +47,13 @@ function Result(props) {
         if ("error" in response) {
             permSetBusInfo("MagicBus Error: " + JSON.stringify(response.error[0]));
         }
+        else {
+            let predictions = response.prd;
+            let info = "MagicBus Predictions:\n";
+            predictions.forEach(prd => {
+                info.concat(prd.rt + ": " + prd.prdtim.slice(10) + "\n");
+            })
+        }
     }
 
     if (!isIntermediateStop && constants.locations[props.location].isBusStop) {
