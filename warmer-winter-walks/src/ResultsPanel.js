@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Result from './Result';
 import './ResultsPanel.css';
 import { Button, Tabs, Tab, List } from '@material-ui/core';
@@ -13,6 +13,8 @@ function TabPanel(props) {
                     atEnd={(index === 0 || index === props.route.length - 1)}
                     setResultMouseEnter={props.setResultMouseEnter}
                     setResultMouseLeave={props.setResultMouseLeave}
+                    fetched={props.fetched}
+                    setFetched={props.setFetched}
                 />
             ))}
             </List>
@@ -21,6 +23,8 @@ function TabPanel(props) {
 }
 
 function ResultsPanel(props) {
+
+    let [fetched, setFetched] = useState({});
     
     function tabChange(event, index) {
         props.setDisplayingWarm(index === 0 ? true : false);
@@ -28,6 +32,7 @@ function ResultsPanel(props) {
 
     function back() {
         props.setSearching(true);
+        setFetched([]);
     }
     
     return (
@@ -46,6 +51,8 @@ function ResultsPanel(props) {
                     setResultMouseEnter={props.setResultMouseEnter}
                     setResultMouseLeave={props.setResultMouseLeave}
                     displayWhenWarm={true}
+                    fetched={fetched}
+                    setFetched={setFetched}
                 />
                 <TabPanel
                     route={props.fastRoute}
@@ -53,6 +60,8 @@ function ResultsPanel(props) {
                     setResultMouseEnter={props.setResultMouseEnter}
                     setResultMouseLeave={props.setResultMouseLeave}
                     displayWhenWarm={false}
+                    fetched={fetched}
+                    setFetched={setFetched}
                 />
             </div>
         </div>
