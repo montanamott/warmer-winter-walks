@@ -54,7 +54,7 @@ function Result(props) {
             predictions.forEach((prd) => {
                 console.log("prd = ", prd);
                 console.log("prd.prdtim = ", prd.prdtm);
-                info.push(<>{prd.rt + ": " + prd.prdtm.slice(10)}<br/></>);
+                info.push(<>{prd.rt + ": " + prd.prdtm.slice(9)}<br/></>);
             })
             permSetBusInfo(info);
         }
