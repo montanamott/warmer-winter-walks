@@ -49,10 +49,14 @@ function Result(props) {
         }
         else {
             let predictions = response.prd;
-            let info = "MagicBus Predictions:\n";
-            predictions.forEach(prd => {
-                info.concat(prd.rt + ": " + prd.prdtim.slice(10) + "\n");
+            let info = [<><b>MagicBus Predictions:</b><br/></>];
+            console.log("predictions = ", predictions);
+            predictions.forEach((prd) => {
+                console.log("prd = ", prd);
+                console.log("prd.prdtim = ", prd.prdtm);
+                info.push(<>{prd.rt + ": " + prd.prdtm.slice(10)}<br/></>);
             })
+            permSetBusInfo(info);
         }
     }
 
